@@ -25,6 +25,17 @@
   <footer>
     © RoberiX 2025 — Tous droits réservés
   </footer>
+<script>
+  window.addEventListener('message', function(event) {
+    if (event.data === 'scrollToIframeResult') {
+      // Scroll vers l'iframe active visible
+      const activeIframe = document.querySelector('.tool-section.active');
+      if (activeIframe) {
+        activeIframe.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+</script>
 
   <script src="js/main.js"></script>
 </body>
