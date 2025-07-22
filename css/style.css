@@ -20,31 +20,29 @@ header h1 {
 }
 
 /* Menu navigation */
+/* Menu navigation responsive et propre */
 nav {
   display: flex;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   background: #007bff;
-  white-space: nowrap;
-  padding: 0;
-  margin: 0;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-nav::-webkit-scrollbar {
-  display: none;
+  padding: 10px 0;
+  gap: 10px;
+  overflow-x: auto;
 }
 
 nav button {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  max-width: 200px;
+  white-space: nowrap;
   background: none;
   border: none;
   color: white;
-  font-size: 15px;
-  padding: 14px 20px;
+  font-size: 16px;
+  padding: 10px 15px;
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
-  white-space: nowrap;
 }
 
 nav button:hover {
@@ -56,6 +54,7 @@ nav button.active {
   color: #007bff;
   border-radius: 5px;
 }
+
 
 /* Contenu */
 main {
