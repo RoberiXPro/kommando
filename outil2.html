@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Démission sans préavis</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 720px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background: #dc3545;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #c82333;
+    }
+    .result {
+      margin-top: 30px;
+      background: #f8d7da;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .result p {
+      margin: 8px 0;
+    }
+    small {
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>STC - Démission sans préavis 🇲🇬</h1>
+
+    <label>Salaire Net mensuel (Ariary)</label>
+    <input type="number" id="salaire" min="0" />
+
+    <label>Ancienneté (en années)</label>
+    <input type="number" id="anciennete" min="0" step="0.1"/>
+
+    <label>Jours de congés non pris (ouvrables)</label>
+    <input type="number" id="conges" min="0" />
+
+    <label>Note de la dernière prime semestrielle</label>
+    <select id="note">
+      <option value="0">Pas de prime / Non concerné</option>
+      <option value="1.5">A+ (150%)</option>
+      <option value="1.2">A (120%)</option>
+      <option value="1">B+ (100%)</option>
+      <option value="0.75">B (75%)</option>
+      <option value="0.35">C (35%)</option>
+      <option value="0.15">B- (15%)</option>
+    </select>
+    <small>Laissez sur "Pas de prime" si hors juin/décembre</small>
+
+    <button onclick="calculerSTCSansPreavis()">Calculer le STC</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculerSTCSansPreavis() {
+      const salaire = parseFloat(document.getElementById('salaire').value);
+      const anciennete = parseFloat(document.getElementById('anciennete').value);
+      const conges = parseInt(document.getElementById('conges').value);
+      const note = parseFloat(document.getElementById('note').value);
+      const resultDiv = document.getElementById('result');
+
+      if (isNaN(salaire) || isNaN(anciennete) || isNaN(conges)) {
+        resultDiv.innerHTML = "<p style='color:red;'>Veuillez remplir tous les champs correctement.</p>";
+        return;
+      }
+
+      let preavis = 1;
+      if (anciennete >= 10) preavis = 2;
+      else if (anciennete >= 5) preavis = 1.5;
+
+      const salaireJournalier = salaire / 26;
+      const indemniteConges = conges * salaireJournalier;
+      const primeSemestrielle = note > 0 ? salaire * note : 0;
+
+      const dettePreavis = salaire * preavis;
+      const montantEntrepriseDoit = indemniteConges + primeSemestrielle;
+
+      const netEntrepriseDoit = montantEntrepriseDoit * 0.87;
+      const netDettePreavis = dettePreavis * 0.87;
+
+      const soldeCompense = netEntrepriseDoit - netDettePreavis;
+
+      resultDiv.innerHTML = `
+        <h3>Résultat :</h3>
+        <p>📅 Préavis non effectué : <strong>${preavis} mois</strong></p>
+        <p>💼 Somme que vous <strong>devez à l'entreprise</strong> (brut) : <strong>${dettePreavis.toLocaleString()} Ar</strong></p>
+        <p>🏖️ Ce que l'entreprise vous doit (congés + prime, brut) : <strong>${montantEntrepriseDoit.toLocaleString()} Ar</strong></p>
+        <hr/>
+        <p>💸 <strong>Net à payer à l'entreprise</strong> après déduction du STC (87%) : <strong>${soldeCompense < 0 ? Math.abs(soldeCompense).toLocaleString() + " Ar" : "0 Ar"}</strong></p>
+        <p>💰 <strong>Net à recevoir</strong> si compensation > préavis : <strong>${soldeCompense > 0 ? soldeCompense.toLocaleString() + " Ar" : "0 Ar"}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>
