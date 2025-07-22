@@ -1,1 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Majoration jour férié</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 720px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background: #17a2b8;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #138496;
+    }
+    .result {
+      margin-top: 30px;
+      background: #e2f7fa;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .result p {
+      margin: 8px 0;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #999;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calcul de majoration jour férié</h1>
 
+    <label for="salaire">Salaire Net mensuel (en Ar)</label>
+    <input type="number" id="salaire" placeholder="Ex : 2000000 :-D" />
+
+    <label for="heures">Nombre d'heures travaillées pendant le jour férié</label>
+    <input type="number" id="heures" placeholder="Ex : 8" />
+
+    <label for="majoration">Pourcentage Majoration</label>
+    <select id="majoration">
+      <option value="1">100%</option>
+      <option value="1.5">150%</option>
+      <option value="2">200%</option>
+    </select>
+
+    <button onclick="calculerMajoration()">Calculer ma majoration</button>
+
+    <div class="result" id="resultat"></div>
+  </div>
+
+  <script>
+function calculerMajoration() {
+  const salaire = parseFloat(document.getElementById('salaire').value);
+  const heures = parseFloat(document.getElementById('heures').value);
+  const coef = parseFloat(document.getElementById('majoration').value);
+  const result = document.getElementById('resultat');
+
+  if (isNaN(salaire) || isNaN(heures) || isNaN(coef)) {
+    result.innerHTML = "<p style='color:red;'>Veuillez remplir tous les champs correctement.</p>";
+    return;
+  }
+
+  const tauxHoraire = salaire / 173.33;
+  const montant = Math.ceil(tauxHoraire * heures * coef / 100) * 100;
+
+  result.innerHTML = `
+    <h3>Résultat :</h3>
+    <p>💰 Salaire horaire : <strong>${tauxHoraire.toLocaleString('fr-FR', {minimumFractionDigits: 2})} Ar</strong></p>
+    <p>⏱️ Heures travaillées : <strong>${heures} h</strong></p>
+    <p>⚡ Majoration : <strong>${coef * 100}%</strong></p>
+    <hr/>
+    <p><strong>💵 Votre Majoration est :</strong> ${montant.toLocaleString('fr-FR')} Ar</p>
+  `;
+}
+  </script>
+</body>
+</html>
