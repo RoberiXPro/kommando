@@ -19,22 +19,32 @@ header h1 {
   font-size: 1.5rem;
 }
 
-/* Menu */
+/* Menu navigation */
 nav {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
+  overflow-x: auto;
+  background: #007bff;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+nav::-webkit-scrollbar {
+  display: none;
 }
 
 nav button {
+  flex: 1 0 auto;
   background: none;
   border: none;
   color: white;
-  font-size: 16px;
-  padding: 10px 15px;
+  font-size: 15px;
+  padding: 14px 20px;
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
+  white-space: nowrap;
 }
 
 nav button:hover {
@@ -50,8 +60,8 @@ nav button.active {
 /* Contenu */
 main {
   max-width: 100%;
-  padding: 0;
   margin: 0 auto;
+  padding: 0;
 }
 
 iframe {
@@ -69,16 +79,11 @@ footer {
   padding: 20px 0;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
-
+/* Responsive ajustements */
+@media (max-width: 768px) {
   nav button {
-    width: 90%;
-    margin: 5px 0;
+    font-size: 14px;
+    padding: 10px 16px;
   }
 
   iframe {
