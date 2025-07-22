@@ -132,6 +132,7 @@
         <p>💸 <strong>Net à payer à l'entreprise</strong> après déduction du STC (87%) : <strong>${soldeCompense < 0 ? Math.abs(soldeCompense).toLocaleString() + " Ar" : "0 Ar"}</strong></p>
         <p>💰 <strong>Net à recevoir</strong> si compensation > préavis : <strong>${soldeCompense > 0 ? soldeCompense.toLocaleString() + " Ar" : "0 Ar"}</strong></p>
       `;
+      resultDiv.scrollIntoView({ behavior: 'smooth' });
     }
   </script>
 </body>
