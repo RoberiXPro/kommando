@@ -128,7 +128,7 @@
         <p>💵 <strong>Total brut estimé : ${totalBrut.toLocaleString()} Ar</strong></p>
         <p>💰 <strong>Total net estimé (87%) : ${totalNet.toLocaleString()} Ar</strong></p>
       `;
-      resultDiv.scrollIntoView({ behavior: 'smooth' });
+     window.parent.postMessage('scrollToIframeResult', '*');
     }
   </script>
 </body>
